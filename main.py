@@ -11,8 +11,11 @@ load_dotenv()
 import firebase_admin
 from firebase_admin import credentials, firestore
 
+import json
+
 if not firebase_admin._apps:
-    cred = credentials.Certificate("serviceAccountKey.json")
+    service_account_info = json.loads(os.getenv("FIREBASE_SERVICE_ACCOUNT"))
+    cred = credentials.Certificate(service_account_info)
     firebase_admin.initialize_app(cred)
 
 db = firestore.client()
